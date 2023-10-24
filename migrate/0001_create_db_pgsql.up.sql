@@ -1,7 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
-CREATE TABLE public.area_atuacao_area_atuacao (
+CREATE TABLE public.gurpo (
 	id serial4 NOT NULL,
 	codarea int4 NULL,
 	nome varchar(20) NOT NULL,
