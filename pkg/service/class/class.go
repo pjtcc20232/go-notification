@@ -10,7 +10,7 @@ import (
 
 type ClassServiceInterface interface {
 	GetAll(ctx context.Context) (*model.ClasstList, error)
-	GetByID(ctx context.Context, ID string) (*model.Class, error)
+	GetByID(ctx context.Context, ID int) (*model.Class, error)
 	GetByName(ctx context.Context, name string) (*model.Class, error)
 	Create(ctx context.Context, cls *model.Class) (*model.Class, error)
 	Update(ctx context.Context, ID int, clsToChange *model.Class) (bool, error)
@@ -51,7 +51,7 @@ func (cl *classservice) GetAll(ctx context.Context) (*model.ClasstList, error) {
 	return cl_list, nil
 }
 
-func (us *classservice) GetByID(ctx context.Context, ID int64) (*model.Class, error) {
+func (us *classservice) GetByID(ctx context.Context, ID int) (*model.Class, error) {
 	stmt, err := us.dbp.GetDB().PrepareContext(ctx, "SELECT id, horario, curso_id FROM turma WHERE id = $1")
 	cl := model.Class{}
 	if err != nil {
