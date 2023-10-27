@@ -3,28 +3,25 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE public.gurpo (
 	id serial4 NOT NULL,
-	codarea int4 NULL,
-	nome varchar(20) NOT NULL,
-	texto varchar(2500) NOT NULL,
-	CONSTRAINT area_atuacao_area_atuacao_codarea_check CHECK ((codarea >= 0)),
-	CONSTRAINT area_atuacao_area_atuacao_pkey PRIMARY KEY (id)
+	grupo varchar(20) NOT NULL,
+	permissoes varchar(2500) NOT NULL,
+	
+	CONSTRAINT grupo_pkey PRIMARY KEY (id)
 );
 
 
-CREATE TABLE usuarios_user(
-	id serial4 not null,
-	user_name varchar(40) not null,
-	email varchar(255) not null, 
-	passwrod varchar(255) not null,
-	hashpass varchar(150) not null,
-	enable bool,
-	locked bool,
-	created_at time without time zone NOT NULL DEFAULT NOW(),
-    updated_at time without time zone NOT NULL DEFAULT NOW(),
-	UNIQUE(email)
+CREATE TABLE usuarios (
+    id serial4 NOT NULL,
+    email varchar(255) NOT NULL, 
+    senha varchar(255) NOT NULL,
+    hashpass varchar(150) NOT NULL,
+    grupo_id int NOT NULL,
+    enable bool,
+    created_at timestamp without time zone NOT NULL DEFAULT NOW(),
+    updated_at timestamp without time zone NOT NULL DEFAULT NOW(),
+    UNIQUE(email),
+    CONSTRAINT fk_grupo_id FOREIGN KEY (grupo_id) REFERENCES public.gurpo(id)
 );
-
--- public.codigos_promocionais_codigos_promocionais definition
 
 CREATE TABLE public.codigos_promocionais_codigos_promocionais (
 	id serial4 NOT NULL,

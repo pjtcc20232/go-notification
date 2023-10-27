@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: supersenha
-      POSTGRES_DB: hoodid_db_dev
+      POSTGRES_DB: notificacao_db
     volumes: 
       - ./migrate/0001_create_db_pgsql.up.sql:/docker-entrypoint-initdb.d/db.sql
       - ./tmp_data/postgres_data:/var/lib/postgresql/data

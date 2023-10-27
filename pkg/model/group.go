@@ -16,8 +16,8 @@ type GroupList struct {
 	List []*Group `json:"list"`
 }
 
-func (cl GroupList) String() string {
-	data, err := json.Marshal(cl)
+func (gl GroupList) String() string {
+	data, err := json.Marshal(gl)
 
 	if err != nil {
 		logger.Error("error to convert GroupList to JSON:"+err.Error(), err)

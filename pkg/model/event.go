@@ -23,7 +23,7 @@ type EventList struct {
 	List []*Event `json:"list"`
 }
 
-func (ev GroupList) String() string {
+func (ev EventList) String() string {
 	data, err := json.Marshal(ev)
 
 	if err != nil {
