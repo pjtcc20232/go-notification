@@ -9,10 +9,10 @@ import (
 type Student struct {
 	ID           uint64 `json:"_id"`
 	Name         string `json:"name"`
-	Registration string `json:"registration"`
 	Period       string `json:"period"`
-	Tbl_class_id uint64 `json:"id_class"`
+	Registration string `json:"registration"`
 	Tbl_usr_id   uint64 `json:"id_usr"`
+	Tbl_class_id uint64 `json:"id_class"`
 }
 
 type StudenttList struct {

@@ -71,11 +71,12 @@ CREATE TABLE public.professores (
 
 CREATE TABLE public.eventos (
 	id serial4 NOT NULL,
-	quantidade int2 NOT NULL,
+	nome varchar(50) NOT NULL,
 	data_evento timestamptz NOT NULL,
 	descricao varchar(255) NULL,
 	turma_id int NOT NULL,
     professor_id int NULL,
+	stratus_eventos varchar(30) NOT NULL,
 	created_at time without time zone NOT NULL DEFAULT NOW(),
     updated_at time without time zone NOT NULL DEFAULT NOW(),
 	CONSTRAINT fk_prof_evento_id FOREIGN KEY (professor_id) REFERENCES public.professores(id),
