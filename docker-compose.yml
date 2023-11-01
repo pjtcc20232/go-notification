@@ -1,23 +1,21 @@
 version: '3.9'
 
 services:
-  
   dbpostgres:
     image: postgres:15.4-alpine3.18
     container_name: dbpostgres
-    # restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: supersenha
       POSTGRES_DB: notificacao_db
-    volumes: 
-      - ./migrate/0001_create_db_pgsql.up.sql:/docker-entrypoint-initdb.d/db.sql
+    volumes:
+      - ./migrate/0001_create_db_pgsql.up.sql:/docker-entrypoint-initdb.d/001_create_db_pgsql.up.sql
       - ./tmp_data/postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     networks:
       - user-bridge
- 
+
 networks:
   user-bridge:
     name: user-bridge

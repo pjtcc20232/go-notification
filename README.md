@@ -1,3 +1,15 @@
+# DOCKER DO BANCO DE DADOS
+ Tem que instalar docker desktop
+ > https://docs.docker.com/desktop/install/windows-install/
+   para iniciar o docker 
+ - docker-compose up
+   para apra o docker
+ - docker-compose dow 
+
+ > caso precise recriar o banco de dados:
+    rode o esse comando abaixo ele vai excluir e crair um novo banco zerado
+ -   Remove-Item -Recurse -Force ./tmp_data/postgres_data
+ 
 # API notification
 
 Sistema  API com Golang
@@ -43,3 +55,5 @@ $ SRV_PORT=9090 SRV_MODE=production ./main.exe
 
 > Acesse:
 - http://localhost:8080/api/v1/products
+
+

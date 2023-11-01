@@ -10,7 +10,7 @@ import (
 	"github.com/notification/back-end/pkg/service/class"
 )
 
-func getAllProducts(service class.ClassServiceInterface) http.Handler {
+func getAllClass(service class.ClassServiceInterface) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		_, list_class := service.GetAll(r.Context())
 		err := json.NewEncoder(w).Encode(list_class)
