@@ -61,6 +61,8 @@ func NewConfig() *Config {
 
 func defaultConf() *Config {
 	default_conf := Config{
+		PORT: "8080",
+
 		Mode:         DEVELOPER,
 		JWTSecretKey: "RgUkXp2s5v8y/B?E(H+KbPeShVmYq3t6", // "----your-256-bit-secret-here----" length 32
 		JWTTokenExp:  15,                                 // 15m

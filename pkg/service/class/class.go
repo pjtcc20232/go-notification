@@ -17,18 +17,18 @@ type ClassServiceInterface interface {
 	Delete(ctx context.Context, ID int) (bool, error)
 }
 
-type classservice struct {
+type ClassService struct {
 	dbp pgsql.DatabaseInterface
 }
 
-func NewClassService(database_pool pgsql.DatabaseInterface) *classservice {
-	return &classservice{
+func NewClassService(database_pool pgsql.DatabaseInterface) *ClassService {
+	return &ClassService{
 		dbp: database_pool,
 	}
 }
 
-func (cl *classservice) GetAll(ctx context.Context) (*model.ClasstList, error) {
-	rows, err := cl.dbp.GetDB().QueryContext(ctx, "SELECT id, horario, curso_id FROM turma ")
+func (cl *ClassService) GetAll(ctx context.Context) (*model.ClasstList, error) {
+	rows, err := cl.dbp.GetDB().QueryContext(ctx, "SELECT id, horario, curso_id FROM turmas ")
 	if err != nil {
 		logger.Error("Erro to list all:"+err.Error(), err)
 		return &model.ClasstList{}, err
@@ -51,8 +51,8 @@ func (cl *classservice) GetAll(ctx context.Context) (*model.ClasstList, error) {
 	return cl_list, nil
 }
 
-func (us *classservice) GetByID(ctx context.Context, ID int) (*model.Class, error) {
-	stmt, err := us.dbp.GetDB().PrepareContext(ctx, "SELECT id, horario, curso_id FROM turma WHERE id = $1")
+func (us *ClassService) GetByID(ctx context.Context, ID int) (*model.Class, error) {
+	stmt, err := us.dbp.GetDB().PrepareContext(ctx, "SELECT id, horario, curso_id FROM turmas WHERE id = $1")
 	cl := model.Class{}
 	if err != nil {
 		logger.Error("Erro to list users:"+err.Error(), err)
@@ -69,8 +69,8 @@ func (us *classservice) GetByID(ctx context.Context, ID int) (*model.Class, erro
 	return &cl, nil
 }
 
-func (us *classservice) GetByName(ctx context.Context, name string) (*model.Class, error) {
-	stmt, err := us.dbp.GetDB().PrepareContext(ctx, "SELECT id, horario, curso_id from turma WHERE name = $1")
+func (us *ClassService) GetByName(ctx context.Context, name string) (*model.Class, error) {
+	stmt, err := us.dbp.GetDB().PrepareContext(ctx, "SELECT id, horario, curso_id from turmas WHERE horario = $1")
 	cl := model.Class{}
 	if err != nil {
 		logger.Error("Erro to list class:"+err.Error(), err)
@@ -87,7 +87,7 @@ func (us *classservice) GetByName(ctx context.Context, name string) (*model.Clas
 	return &cl, nil
 }
 
-func (us *classservice) Create(ctx context.Context, cls *model.Class) (*model.Class, error) {
+func (us *ClassService) Create(ctx context.Context, cls *model.Class) (*model.Class, error) {
 
 	tx, err := us.dbp.GetDB().BeginTx(ctx, nil)
 	cl := model.Class{}
@@ -117,7 +117,7 @@ func (us *classservice) Create(ctx context.Context, cls *model.Class) (*model.Cl
 	return &cl, nil
 }
 
-func (us *classservice) Update(ctx context.Context, ID int, clsToChange *model.Class) (bool, error) {
+func (us *ClassService) Update(ctx context.Context, ID int, clsToChange *model.Class) (bool, error) {
 	// Comece uma transação
 	tx, err := us.dbp.GetDB().BeginTx(ctx, nil)
 	if err != nil {
@@ -126,7 +126,7 @@ func (us *classservice) Update(ctx context.Context, ID int, clsToChange *model.C
 	}
 	defer tx.Rollback()
 
-	query := "UPDATE turma SET horario = $1, curso_id = $2 WHERE id = $3"
+	query := "UPDATE turmas SET horario = $1, curso_id = $2 WHERE id = $3"
 
 	// Execute a consulta de atualização dentro da transação
 	_, err = tx.ExecContext(ctx, query, clsToChange.Schedules, clsToChange.Tbl_course_id, ID)
@@ -146,7 +146,7 @@ func (us *classservice) Update(ctx context.Context, ID int, clsToChange *model.C
 	return true, nil
 }
 
-func (us *classservice) Delete(ctx context.Context, ID int) (bool, error) {
+func (us *ClassService) Delete(ctx context.Context, ID int) (bool, error) {
 	// Comece uma transação
 	tx, err := us.dbp.GetDB().BeginTx(ctx, nil)
 	if err != nil {
@@ -154,7 +154,7 @@ func (us *classservice) Delete(ctx context.Context, ID int) (bool, error) {
 		return false, err
 	}
 	defer tx.Rollback()
-	query := "DELETE FROM turma WHERE id = $1"
+	query := "DELETE FROM turmas WHERE id = $1"
 
 	_, err = tx.ExecContext(ctx, query, ID)
 	if err != nil {

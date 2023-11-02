@@ -6,8 +6,14 @@ import (
 
 	"github.com/notification/back-end/internal/config"
 	"github.com/notification/back-end/internal/config/logger"
+	"github.com/notification/back-end/internal/handler/class"
+	"github.com/notification/back-end/internal/handler/course"
+	"github.com/notification/back-end/pkg/adapter/pgsql"
 
 	"github.com/notification/back-end/pkg/server"
+
+	class_service "github.com/notification/back-end/pkg/service/class"
+	course_service "github.com/notification/back-end/pkg/service/course"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -19,13 +25,17 @@ var (
 
 func main() {
 
-	logger.Info("start Hoodid application")
+	logger.Info("start Notifaction application")
 	conf := config.NewConfig()
 
+	db_pool := pgsql.New(conf)
+	class_service := class_service.NewClassService(db_pool)
+	course_service := course_service.NewCourseService(db_pool)
 	r := chi.NewRouter()
 
 	r.Get("/", healthcheck)
-
+	class.RegisterClassAPIHandlers(r, class_service)
+	course.RegisterCourseAPIHandlers(r, course_service)
 	srv := server.NewHTTPServer(r, conf)
 
 	go func() {

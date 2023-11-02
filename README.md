@@ -40,9 +40,9 @@ $ go build -ldflags "-s -w" cmd/product/main.go
 # Ou
 $ go build -ldflags "-s -w" -o main cmd/product/main.go
 ```
-## Opções de execução
-- SRV_PORT (Porta padrão 8080)
-- SRV_MODE (developer, homologation ou production / padrão production)
+## Opções de execução roda esse comando como está no pronto do windows terminal 
+ $env:SRV_PORT="8080"; $env:SRV_MODE="developer"; $env:SRV_DB_HOST="localhost"; $env:SRV_DB_DRIVE="postgres"; $env:SRV_DB_HOST= "localhost"; $env:SRV_DB_PORT= "5432"; $env:SRV_DB_USER= "postgres"; $env:SRV_DB_PASS= "supersenha"; $env:SRV_DB_NAME= "notificacao_db";
+ go run cmd/api/main.go
 
 > Exemplo de Uso:
 ```bash

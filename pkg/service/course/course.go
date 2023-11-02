@@ -10,9 +10,9 @@ import (
 
 type CourseServiceInterface interface {
 	GetAll(ctx context.Context) (*model.CourseList, error)
-	GetByID(ctx context.Context, ID int) (*model.CourseList, error)
+	GetByID(ctx context.Context, ID int) (*model.Courses, error)
 	GetByName(ctx context.Context, name string) (*model.Courses, error)
-	Create(ctx context.Context, cls *model.Class) (*model.Courses, error)
+	Create(ctx context.Context, cls *model.Courses) (*model.Courses, error)
 	Update(ctx context.Context, ID int, corsToChange *model.Courses) (bool, error)
 	Delete(ctx context.Context, ID int) (bool, error)
 }
@@ -51,7 +51,7 @@ func (cl *courseService) GetAll(ctx context.Context) (*model.CourseList, error) 
 	return cl_list, nil
 }
 
-func (us *courseService) GetByID(ctx context.Context, ID int64) (*model.Courses, error) {
+func (us *courseService) GetByID(ctx context.Context, ID int) (*model.Courses, error) {
 	stmt, err := us.dbp.GetDB().PrepareContext(ctx, "SELECT id, nome_curso FROM cursos WHERE id = $1")
 	cl := model.Courses{}
 	if err != nil {
@@ -97,7 +97,7 @@ func (us *courseService) Create(ctx context.Context, cls *model.Courses) (*model
 		return &cl, err
 	}
 
-	query := "INSERT INTO cursos (nome_curso) VALUES ($1);"
+	query := "INSERT INTO cursos (nome) VALUES ($1);"
 
 	_, err = tx.ExecContext(ctx, query, cls.Name)
 	if err != nil {

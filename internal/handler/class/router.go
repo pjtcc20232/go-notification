@@ -8,9 +8,9 @@ import (
 )
 
 func RegisterClassAPIHandlers(r chi.Router, service class.ClassServiceInterface) {
-	r.Route("/api/v1", func(r chi.Router) {
-		r.Post("/class", createClass(service))
-		r.Put("/class/{id}", updateClass(service))
+	r.Route("/api/v1/class", func(r chi.Router) {
+		r.Post("/add", createClass(service))
+		r.Put("/update/{id}", updateClass(service))
 		r.Get("/all", func(w http.ResponseWriter, r *http.Request) {
 			handler := getAllClass(service)
 			handler.ServeHTTP(w, r)
