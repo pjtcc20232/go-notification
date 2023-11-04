@@ -28,7 +28,7 @@ func NewCourseService(database_pool pgsql.DatabaseInterface) *courseService {
 }
 
 func (cl *courseService) GetAll(ctx context.Context) (*model.CourseList, error) {
-	rows, err := cl.dbp.GetDB().QueryContext(ctx, "SELECT id, nome_curso FROM cursos ")
+	rows, err := cl.dbp.GetDB().QueryContext(ctx, "SELECT id, nome FROM cursos ")
 	if err != nil {
 		logger.Error("Erro to list all:"+err.Error(), err)
 		return &model.CourseList{}, err
@@ -52,7 +52,7 @@ func (cl *courseService) GetAll(ctx context.Context) (*model.CourseList, error) 
 }
 
 func (us *courseService) GetByID(ctx context.Context, ID int) (*model.Courses, error) {
-	stmt, err := us.dbp.GetDB().PrepareContext(ctx, "SELECT id, nome_curso FROM cursos WHERE id = $1")
+	stmt, err := us.dbp.GetDB().PrepareContext(ctx, "SELECT id, nome FROM cursos WHERE id = $1")
 	cl := model.Courses{}
 	if err != nil {
 		logger.Error("Erro to list cursos:"+err.Error(), err)
@@ -97,7 +97,7 @@ func (us *courseService) Create(ctx context.Context, cls *model.Courses) (*model
 		return &cl, err
 	}
 
-	query := "INSERT INTO cursos (nome) VALUES ($1);"
+	query := "INSERT INTO cursos (nome) VALUES ($1) ;"
 
 	_, err = tx.ExecContext(ctx, query, cls.Name)
 	if err != nil {
@@ -126,7 +126,7 @@ func (us *courseService) Update(ctx context.Context, ID int, clsToChange *model.
 	}
 	defer tx.Rollback()
 
-	query := "UPDATE cursos SET nome_curso = $1  WHERE id = $2"
+	query := "UPDATE cursos SET nome = $1  WHERE id = $2"
 
 	// Execute a consulta de atualização dentro da transação
 	_, err = tx.ExecContext(ctx, query, clsToChange.Name, ID)
